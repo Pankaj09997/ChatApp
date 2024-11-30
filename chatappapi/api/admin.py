@@ -53,7 +53,7 @@ class UserChangeForm(forms.ModelForm):
 
 
 class UserAdmin(BaseUserAdmin):
-    # The forms to add and change user instances
+    # The forms to add and change user instance
     form = UserChangeForm
     add_form = UserCreationForm
 
