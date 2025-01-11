@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
-from api.models import MyUser,ProfilePicture
+from api.models import MyUser,ProfilePicture,MyChats,Friendship
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -89,3 +89,5 @@ class UserAdmin(BaseUserAdmin):
 # Now register the new UserAdmin...
 admin.site.register(MyUser, UserAdmin)
 admin.site.register(ProfilePicture)
+admin.site.register(MyChats)
+admin.site.register(Friendship)

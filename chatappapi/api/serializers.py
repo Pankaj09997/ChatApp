@@ -50,19 +50,51 @@ class ChangePasswordSerializer(serializers.Serializer):
     
 class ProfilePictureSerializer(serializers.ModelSerializer):
     class Meta:
-      model=ProfilePicture
-      fields=["id","user","image","uploaded_at"]
+        model = ProfilePicture
+        fields = ["id", "user", "image", "uploaded_at"]
+        # this means that this field should not be send to the request load
+        extra_kwargs = {"user": {"read_only": True}}
+
+    def create(self, validated_data):
+        request = self.context.get("request")
+        validated_data["user"] = request.user
+        return super().create(validated_data)
+
+    
       
-      def create(self,validated_data):
-          request=self.context.get("request")
-          validated_data['user']=request.user
-          return super().create(validated_data)
 class FriendshipSerializer(serializers.ModelSerializer):
-    sender=serializers.EmailField(source="sender.email",read_only=True)
-    receiver=serializers.EmailField(source="receiver.email",read_only=True)
+    sender_email = serializers.EmailField(source="sender.email", read_only=True)
+    sender_name = serializers.CharField(source="sender.name", read_only=True) 
+    receiver_email = serializers.EmailField(source="receiver.email", read_only=True)
+    receiver_name = serializers.CharField(source="receiver.name", read_only=True)  
+
     class Meta:
-        model=Friendship
-        fields=["id","sender","receiver","is_accepted","created_at"]
+        model = Friendship
+        fields = [
+            "id",
+            "sender_email",
+            "sender_name",
+            "receiver_email",
+            "receiver_name",
+            "friend_request_sent",
+            "is_accepted",
+            "created_at",
+        ]
+
+        
+# class ForgotPassword(serializers.Serializer):
+#     password = serializers.CharField(max_length=32, style={'input_type': 'password'}, write_only=True)
+#     password2 = serializers.CharField(max_length=32, style={'input_type': 'password'}, write_only=True)
+#     class Meta:
+#         fields=['password','password2']
+#         def validate(self,attrs):
+#             password=attrs.get('password')
+#             password2=attrs.get('password2')
+#             uid=self.context.get('uid')
+#             token=self.context.get('token')
+#             if password != password2:
+#                 raise serializers.ValidationError("Password donot match")
+#             id
         
       
         

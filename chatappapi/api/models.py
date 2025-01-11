@@ -82,12 +82,24 @@ class ProfilePicture(models.Model):
 class Friendship(models.Model):
     sender=models.ForeignKey(MyUser,on_delete=models.CASCADE,related_name="sent_requests")
     receiver=models.ForeignKey(MyUser,on_delete=models.CASCADE,related_name="receiver_requests")
+    friend_request_sent=models.BooleanField(default=False)
     is_accepted=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         status="Friends"if self.is_accepted else "Request Sent"
         return f"{self.sender.email}->{self.receiver.email} ({status})"
+    
+class MyChats(models.Model):
+    me = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="chats_as_me")
+    frnd = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name="chat_as_friend")
+    chats = models.JSONField(default=list)
+
+    def __str__(self):
+        return f"Chat between {self.me.name} and {self.frnd.name}"
+
+        
+     
         
     
     
