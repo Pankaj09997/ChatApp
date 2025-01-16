@@ -54,7 +54,8 @@ void main() async {
                 userSearchRepositories: UsersearchrepositoriesImpl(
                     homePageApiService: HomePageApiService()))))),
 
-                BlocProvider(create:(context) => FriendListBloc(FriendListUseCase(friendListRepoBusiness: FriendListRepoBusinessImpl(homePageApiService: HomePageApiService())))..add(ShowFriendList())),
+                // BlocProvider(create:(context) => FriendListBloc(FriendListUseCase(friendListRepoBusiness: FriendListRepoBusinessImpl(homePageApiService: HomePageApiService())))..add(ShowFriendList())),
+                BlocProvider(create:(context) =>FriendListBloc(FriendListUseCase(friendListRepoBusiness: FriendListRepoBusinessImpl(homePageApiService: HomePageApiService())), ProfilePictureUseCase(profileRepository: ProfileGetRepositoryImpl(ProfilePictureService()))) ),
                 BlocProvider(create: (_)=>UserProfileBloc(userProfileUsecase: UserProfileUsecase(userProfileRepositories: UserProfileRepositoriesImpl(userProfileApiService: UserProfileApiService())),
                 ProfilePictureUseCase(profileRepository: ProfileGetRepositoryImpl(ProfilePictureService()),
                 ),

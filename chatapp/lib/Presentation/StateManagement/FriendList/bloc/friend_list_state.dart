@@ -20,8 +20,13 @@ final class FriendListNavigateState extends FriendListState {
   FriendListNavigateState(this.name, {required this.id});
 }
 
-final class FriendListSucessState extends FriendListState {
+class FriendListSucessState extends FriendListState {
+  final ProfilePictureEntities profilePictureEntities;
   final List<FriendListEntities> friendListEntities;
 
-  FriendListSucessState({required this.friendListEntities});
+  FriendListSucessState({
+    required this.profilePictureEntities,
+    required this.friendListEntities,
+  });
 }
+

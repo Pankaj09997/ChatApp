@@ -71,4 +71,9 @@ class AuthApiService {
     await _loadToken();
     return _token != null;
   }
+
+  Future<String?> getToken() async {
+    await _loadToken();
+    return _token;
+  }
 }

@@ -29,7 +29,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, "/profile");
-
             },
             icon: Icon(Icons.person),
           )
@@ -69,10 +68,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       itemCount: state.friendListEntities.length,
                       itemBuilder: (context, index) {
                         final user = state.friendListEntities[index];
+                        final userPhoto = state.profilePictureEntities.data?["image"];
+                        print("$userPhoto");
                         print("Hello user:$user");
                         return ListTile(
                           leading: CircleAvatar(
-                            child: Icon(Icons.person),
+                            backgroundImage: NetworkImage("http://127.0.0.1:8000$userPhoto"),
                           ),
                           title: Text(user.name ?? "No Name"),
                           subtitle: Text(user.email ?? "No Email"),

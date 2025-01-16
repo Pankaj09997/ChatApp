@@ -1,5 +1,8 @@
-part of 'user_profile_bloc.dart';
+import 'package:chatapp/Business/Entities/ProfilePictureEntities.dart';
+import 'package:chatapp/Business/Entities/UserProfileEntities.dart';
+import 'package:flutter/material.dart';
 
+/// BLoC State Definitions
 @immutable
 sealed class UserProfileState {}
 
@@ -30,8 +33,6 @@ final class UserProfilePictureUpdateState extends UserProfileState {
 
   UserProfilePictureUpdateState({required this.profilePictureEntities});
 }
-
-final class UserProfilePictureLoading extends UserProfileState {}
 
 final class UserProfilePictureError extends UserProfileState {
   final String message;

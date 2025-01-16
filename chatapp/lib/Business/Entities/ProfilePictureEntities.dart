@@ -7,4 +7,5 @@ class ProfilePictureEntities{
   final Map<String, dynamic>? response;
 
   ProfilePictureEntities({required this.status, required this.data, required this.message, required this.response});
+  
 }

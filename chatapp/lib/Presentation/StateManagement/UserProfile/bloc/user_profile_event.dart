@@ -1,5 +1,8 @@
-part of 'user_profile_bloc.dart';
+import 'dart:io';
 
+import 'package:flutter/material.dart';
+
+/// BLoC Event Definitions
 @immutable
 sealed class UserProfileEvent {}
 
