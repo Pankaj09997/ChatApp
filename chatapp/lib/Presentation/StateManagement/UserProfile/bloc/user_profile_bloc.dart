@@ -24,16 +24,20 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
     on<UpdateProfilePicture>(_updateProfilePicture);
   }
 
-  Future<void> _userProfileInitialEvent(
-      UserProfileInitialEvent event, Emitter<UserProfileState> emit) async {
-    emit(UserProfileLoading());
-    try {
-      final response = await userProfileUsecase.getuserProfile();
-      emit(UserProfileSuccess(userProfileEntities: response));
-    } catch (e) {
-      emit(UserProfileError(message: e.toString()));
-    }
+Future<void> _userProfileInitialEvent(
+    UserProfileInitialEvent event, Emitter<UserProfileState> emit) async {
+  emit(UserProfileLoading());
+  try {
+    final response = await userProfileUsecase.getuserProfile();
+    print("User profile fetched successfully: $response");
+    emit(UserProfileSuccess(userProfileEntities: response));
+  } catch (e, stackTrace) {
+    print("Error fetching user profile: $e");
+    print(stackTrace);
+    emit(UserProfileError(message: e.toString()));
   }
+}
+
 Future<void> _getUserProfilePicture(
     GetUserProfilePicture event, Emitter<UserProfileState> emit) async {
   emit(UserProfileLoading());

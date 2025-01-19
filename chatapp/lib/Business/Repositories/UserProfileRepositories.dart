@@ -18,10 +18,10 @@ class UserProfileRepositoriesImpl implements UserProfileRepositories {
     final userModel = UserProfileModel.fromJson(response);
     //mapping the data into the entities
     return UserProfileEntities(
-        id: userModel.id!,
-        email: userModel.email!,
-        name: userModel.name!,
-        is_active: userModel.is_active!,
-        last_login: userModel.last_login!);
+        id: userModel.id,
+        email: userModel.email,
+        name: userModel.name,
+        is_active: userModel.is_active,
+        last_login: userModel.last_login);
   }
 }

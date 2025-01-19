@@ -1,7 +1,7 @@
 class ChatHistoryModel {
   final int sender_id;
   final String message;
-  final DateTime timestamp;
+  final String timestamp;
 
   ChatHistoryModel(
       {required this.sender_id,

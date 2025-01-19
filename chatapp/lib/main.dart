@@ -1,21 +1,25 @@
 import 'package:chatapp/Business/Repositories/AuthRepositories.dart';
 import 'package:chatapp/Business/Repositories/BusinessSendFriendRequest.dart';
+import 'package:chatapp/Business/Repositories/ChatHistoryRepository.dart';
 import 'package:chatapp/Business/Repositories/FriendListRepoBusiness.dart';
 import 'package:chatapp/Business/Repositories/ProfileRepository.dart';
 import 'package:chatapp/Business/Repositories/UserProfileRepositories.dart';
 import 'package:chatapp/Business/Repositories/UserSearchRepositories.dart';
+import 'package:chatapp/Business/Usecases/ChatHistoryUseCase.dart';
 import 'package:chatapp/Business/Usecases/FriendListUseCase.dart';
 import 'package:chatapp/Business/Usecases/ProfilePictureUsecase.dart';
 import 'package:chatapp/Business/Usecases/SendFriendRequestUseCase.dart';
 import 'package:chatapp/Business/Usecases/UserProfileUseCase.dart';
 import 'package:chatapp/Business/Usecases/UserSearchUseCase.dart';
 import 'package:chatapp/Data/DataSources/AuthApiService.dart';
+import 'package:chatapp/Data/DataSources/ChatRoomApiService.dart';
 import 'package:chatapp/Data/DataSources/HomePageApiService.dart';
 import 'package:chatapp/Data/DataSources/ProfilePicture.dart';
 import 'package:chatapp/Data/DataSources/UserProfileApiService.dart';
 import 'package:chatapp/Data/Respositories/SendFriendRequest.dart';
 import 'package:chatapp/Presentation/Pages/AuthPages/LoginPage.dart';
 import 'package:chatapp/Presentation/Pages/Screens/HomePage.dart';
+import 'package:chatapp/Presentation/StateManagement/ChatHistoryBloc/bloc/chat_history_bloc.dart';
 import 'package:chatapp/Presentation/StateManagement/FriendList/bloc/friend_list_bloc.dart';
 import 'package:chatapp/Presentation/StateManagement/ProfilePictureBloc/bloc/profile_picture_bloc.dart';
 import 'package:chatapp/Presentation/StateManagement/SendFriendRequest/bloc/send_friend_request_bloc.dart';
@@ -60,7 +64,8 @@ void main() async {
                 ProfilePictureUseCase(profileRepository: ProfileGetRepositoryImpl(ProfilePictureService()),
                 ),
                 
-                ))
+                )),
+                BlocProvider(create: (_)=>ChatHistoryBloc(ChatHistoryUseCase(chatHistoryRepositoryBusiness: ChatHistoryRepositoryBusinessImpl(chatRoomApiService: ChatRoomApiService()))))
   ], child:  MyApp(loggedIn: loggedIn,)));
 }
 
@@ -77,7 +82,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: widget.loggedIn?HomePageScreen():LoginPage(),
+      home: widget.loggedIn?LoginPage():LoginPage(),
       initialRoute: "/",
       onGenerateRoute: RouteGenerator.generateRoute,
     );
