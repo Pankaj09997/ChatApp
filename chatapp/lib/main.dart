@@ -2,17 +2,20 @@ import 'package:chatapp/Business/Repositories/AuthRepositories.dart';
 import 'package:chatapp/Business/Repositories/BusinessSendFriendRequest.dart';
 import 'package:chatapp/Business/Repositories/ChatHistoryRepository.dart';
 import 'package:chatapp/Business/Repositories/FriendListRepoBusiness.dart';
+import 'package:chatapp/Business/Repositories/FriendRequestRepository.dart';
 import 'package:chatapp/Business/Repositories/ProfileRepository.dart';
 import 'package:chatapp/Business/Repositories/UserProfileRepositories.dart';
 import 'package:chatapp/Business/Repositories/UserSearchRepositories.dart';
 import 'package:chatapp/Business/Usecases/ChatHistoryUseCase.dart';
 import 'package:chatapp/Business/Usecases/FriendListUseCase.dart';
+import 'package:chatapp/Business/Usecases/FriendRequestUseCase.dart';
 import 'package:chatapp/Business/Usecases/ProfilePictureUsecase.dart';
 import 'package:chatapp/Business/Usecases/SendFriendRequestUseCase.dart';
 import 'package:chatapp/Business/Usecases/UserProfileUseCase.dart';
 import 'package:chatapp/Business/Usecases/UserSearchUseCase.dart';
 import 'package:chatapp/Data/DataSources/AuthApiService.dart';
 import 'package:chatapp/Data/DataSources/ChatRoomApiService.dart';
+import 'package:chatapp/Data/DataSources/FriendRequestApiService.dart';
 import 'package:chatapp/Data/DataSources/HomePageApiService.dart';
 import 'package:chatapp/Data/DataSources/ProfilePicture.dart';
 import 'package:chatapp/Data/DataSources/UserProfileApiService.dart';
@@ -21,6 +24,7 @@ import 'package:chatapp/Presentation/Pages/AuthPages/LoginPage.dart';
 import 'package:chatapp/Presentation/Pages/Screens/HomePage.dart';
 import 'package:chatapp/Presentation/StateManagement/ChatHistoryBloc/bloc/chat_history_bloc.dart';
 import 'package:chatapp/Presentation/StateManagement/FriendList/bloc/friend_list_bloc.dart';
+import 'package:chatapp/Presentation/StateManagement/FriendRequests/bloc/friend_requests_bloc.dart';
 import 'package:chatapp/Presentation/StateManagement/ProfilePictureBloc/bloc/profile_picture_bloc.dart';
 import 'package:chatapp/Presentation/StateManagement/SendFriendRequest/bloc/send_friend_request_bloc.dart';
 import 'package:chatapp/Presentation/StateManagement/UserProfile/bloc/user_profile_bloc.dart';
@@ -35,6 +39,11 @@ void main() async {
   final authApiService = AuthApiService();
   bool loggedIn=await authApiService.isLoggedIn();
   final AuthRepository authRepository = AuthRepositoryImpl(AuthApiService());
+  final friendRequestUseCase = FriendRequestUseCase(
+  friendRequestListRepositoryBusiness: FriendRequestListRepositoryBusinessImpl(friendRequestApiService: FriendRequestApiService()),
+  acceptFriendRequestRepositoryBusiness: AcceptFriendRequestRepositoryBusinessImpl(friendRequestApiService: FriendRequestApiService()),
+);
+
   
   runApp(MultiBlocProvider(providers: [
     BlocProvider<AuthBloc>(
@@ -65,7 +74,14 @@ void main() async {
                 ),
                 
                 )),
-                BlocProvider(create: (_)=>ChatHistoryBloc(ChatHistoryUseCase(chatHistoryRepositoryBusiness: ChatHistoryRepositoryBusinessImpl(chatRoomApiService: ChatRoomApiService()))))
+                BlocProvider(create: (_)=>ChatHistoryBloc(ChatHistoryUseCase(chatHistoryRepositoryBusiness: ChatHistoryRepositoryBusinessImpl(chatRoomApiService: ChatRoomApiService())))
+                ),
+BlocProvider(create: (context)=>FriendRequestsBloc(friendRequestUseCase)),
+
+
+
+
+
   ], child:  MyApp(loggedIn: loggedIn,)));
 }
 
@@ -82,7 +98,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: widget.loggedIn?LoginPage():LoginPage(),
+      home: widget.loggedIn?HomePageScreen():LoginPage(),
       initialRoute: "/",
       onGenerateRoute: RouteGenerator.generateRoute,
     );

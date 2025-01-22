@@ -2,6 +2,7 @@ import 'package:chatapp/Presentation/Pages/AuthPages/LoginPage.dart';
 import 'package:chatapp/Presentation/Pages/AuthPages/SignUpPage.dart';
 import 'package:chatapp/Presentation/Pages/ProfilePicture/ProfilePicture.dart';
 import 'package:chatapp/Presentation/Pages/Screens/ChatRoom.dart';
+import 'package:chatapp/Presentation/Pages/Screens/FriendRequests.dart';
 import 'package:chatapp/Presentation/Pages/Screens/HomePage.dart';
 import 'package:chatapp/Presentation/Pages/Screens/ProfilePage.dart';
 import 'package:chatapp/Presentation/Pages/Screens/SearchUserPage.dart';
@@ -42,6 +43,8 @@ class RouteGenerator {
                   name: name,
                 ));
 
+      case "/friendrequest":
+        return MaterialPageRoute(builder: (_) => FriendRequestPage());
       default:
         return MaterialPageRoute(builder: (_) => Error());
     }

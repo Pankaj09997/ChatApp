@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:chatapp/Presentation/StateManagement/FriendList/bloc/friend_list_bloc.dart';
 import 'package:chatapp/Presentation/Widgets/TextField.dart';
@@ -27,10 +28,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
         title: Text("Chats"),
         actions: [
           IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, "/friendrequest");
+              },
+              icon: Icon(CupertinoIcons.group)),
+          IconButton(
             onPressed: () {
               Navigator.pushNamed(context, "/profile");
             },
-            icon: Icon(Icons.person),
+            icon: Icon(CupertinoIcons.person),
           )
         ],
       ),
@@ -68,12 +74,14 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       itemCount: state.friendListEntities.length,
                       itemBuilder: (context, index) {
                         final user = state.friendListEntities[index];
-                        final userPhoto = state.profilePictureEntities.data?["image"];
+                        final userPhoto =
+                            state.profilePictureEntities.data?["image"];
                         print("$userPhoto");
                         print("Hello user:$user");
                         return ListTile(
                           leading: CircleAvatar(
-                            backgroundImage: NetworkImage("http://127.0.0.1:8000$userPhoto"),
+                            backgroundImage:
+                                NetworkImage("http://127.0.0.1:8000$userPhoto"),
                           ),
                           title: Text(user.name ?? "No Name"),
                           subtitle: Text(user.email ?? "No Email"),
