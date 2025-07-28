@@ -22,8 +22,10 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
+  // channel creation so that user can communicate with the server.
   late WebSocketChannel webSocketChannel;
   final TextEditingController _messageController = TextEditingController();
+  //storing the message that is current message that the user have sent recently.
   final List<Map<String, dynamic>> _messages = [];
   String? _token;
   int? _userId; // Authenticated user's ID
@@ -70,7 +72,7 @@ class _ChatRoomState extends State<ChatRoom> {
         (message) {
           //converting the data that is in the server to the dart objects that is in the Map<String,dynamic>
           final data = Map<String, dynamic>.from(jsonDecode(message));
-          //rebuilding the ui when the message are added into it
+          //rebuilding the ui when the message are added into it So the UI shows history + current session messages together so that it would not load for long time to restore the history of the chat
           setState(() {
             _messages.add({
               'message': data['message'],
