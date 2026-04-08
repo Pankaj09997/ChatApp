@@ -4,6 +4,18 @@ This is a **Chat Application** built using **Flutter** for the frontend and **Dj
 
 ---
 
+## 📸 Screenshots
+
+| Profile Page | Search Page |
+|--------------|-------------|
+| ![Profile Page](chatapp/asset/image_10.png) | ![Search Page](chatapp/asset/image_11.png) |
+
+| Chat Page | Friend Request Page |
+|-----------|---------------------|
+| ![Chat Page](chatapp/asset/image_12.png) | ![Friend Request Page](chatapp/asset/image_13.png) |
+
+---
+
 ## Features
 
 - **User Authentication**: Secure login and registration using JWT authentication.
